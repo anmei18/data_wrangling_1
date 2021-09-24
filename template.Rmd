@@ -7,6 +7,7 @@ output: github_document
 ```{r, echo = FALSE,message=FALSE}
 library(tidyverse)
 library(readxl)
+library(haven)
 ```
 
 ## Import some data
@@ -56,13 +57,17 @@ skimr::skim(litters_df)
 
 ## Arguments in 'read_csv'
 
+Check out '?read_csv()' for more information.
+
 ```{r, eval=FALSE}
 litters_df = 
   read_csv(
-  "data/FAS_litters.csv",
+  "./data/FAS_litters.csv",
   skip = 5,
   col_names = FALSE,
-  na = "low8")
+  na = "low8",
+  show_col_types = FALSE)
+litters_df
 ```
 
 ## Parsing columns
@@ -86,7 +91,45 @@ litters_data = read_csv(file = "./data/FAS_litters.csv",
 
 ## Reading from excel
 
+Read MLB data
+
 ```{r}
 mlb11_df = read_excel("data/mlb11.xlsx")
+mlb11_df
 ```
+
+LotR Words is next
+```{r}
+fellow_df = read_excel("data/LotR_Words.xlsx",range = "B3:D6")
+fellow_df
+```
+
+
+##Read a SAS file
+
+This is where I tried to read a SAS file.
+
+```{r}
+pulse_df = read_sas("data/public_pulse_data.sas7bdat")
+```
+
+
+## why to never use 'read.csv'
+
+'read.csv' doesn't give 'tibble' and that's really bad.
+
+```{r, eval = FALSEr}
+litters_df_base = read.csv("data/FAS_litters.csv")
+litters_df_base
+```
+
+
+## how do I export data
+
+there's a good way!
+
+```{r}
+write_csv(fellow_df,"data/fellowship_words.csv")
+```
+
 
