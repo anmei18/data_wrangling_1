@@ -85,5 +85,55 @@ relocate(litters_df, litter_number)
 `Select` is the key function, but there are funcs that can duplicate  to some of the things that you can do with select
 
 
+## `filter`
+
+`filter` is intended to remove rows or to keep rows that you are interested in retaining for some subsequent analysis
+
+`select` operates on columns while `filter` operates on rows
+
+
+Filter the data with the weight of mother on the first day that she's pregnant that is less than 22
+```{r}
+filter(litters_df, gd0_weight < 22)
+```
+
+```{r}
+filter(litters_df, gd0_weight >= 22)
+```
+
+A list of logical operations is available on the P8105 website
+
+us `==` as equal to
+
+```{r}
+filter(litters_df,gd_of_birth == 20)
+```
+
+Ways to negate
+
+Get all of the data where gd_of_birth is not 20.
+This works on more complicated things
+```{r}
+filter(litters_df,!(gd_of_birth == 20))
+```
+
+Another way of doing "not equal to"
+```{r}
+filter(litters_df,gd_of_birth != 20)
+```
+
+
+```{r}
+filter(litters_df,gd0_weight >= 22,gd_of_birth == 20 )
+```
+
+```{r}
+filter(litters_df, group == "Mod8")
+```
+
+filter where group is equal to either "Con7" or "Mod8"
+```{r}
+filter(litters_df, group %in% c("Con7","Mod8"))
+```
 
 
