@@ -6,6 +6,7 @@ output: github_document
 
 ```{r setup}
 library(tidyverse)
+library(dplyr)
 
 ```
 
@@ -135,5 +136,22 @@ filter where group is equal to either "Con7" or "Mod8"
 ```{r}
 filter(litters_df, group %in% c("Con7","Mod8"))
 ```
+
+
+
+## `mutate`
+
+used to either modify an existing variable or create some new variables
+
+options(tibble.width = Inf) # displays all columns.
+options(tibble.print_max = Inf) # to show all the rows.
+
+```{r}
+mutate(
+  litters_df, 
+  wt_gain = gd18_weight - gd0_weight,
+  group = str_to_lower(group))      #making all group variables lower case         
+```
+
 
 
