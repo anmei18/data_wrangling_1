@@ -155,3 +155,20 @@ mutate(
 
 
 
+## `arrange`
+
+putting things in order
+
+
+```{r}
+arrange(litters_df, pups_born_alive)
+```
+
+first arrange in order by pups_born_alive and then within each of those levels its in order for gd0_weight
+
+```{r}
+arrange(litters_df, pups_born_alive,gd0_weight)
+```
+
+
+
