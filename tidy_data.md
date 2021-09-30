@@ -38,18 +38,20 @@ pulse_tidy =
   )
 ```
 
-## pivot\_wider
+## `pivot_wider`
 
 make up a results data table
 
 ``` r
+#computer-friendly table
 analysis_df = 
   tibble(
     group = c("treatment","treatment","control","control"),
     time = c("a","b","a","b"),
-    group_mean = c(4,8,3,6)
+    group_mean = c(4,8,3.5,6)
   )
 
+#human-friendly table : make it easier for human to read
 analysis_df %>% 
   pivot_wider(
     names_from = "time",
@@ -60,8 +62,8 @@ analysis_df %>%
 
 | group     |   a |   b |
 |:----------|----:|----:|
-| treatment |   4 |   8 |
-| control   |   3 |   6 |
+| treatment | 4.0 |   8 |
+| control   | 3.5 |   6 |
 
 \#\#bind\_rows
 
