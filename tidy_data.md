@@ -1,45 +1,40 @@
 Tidy data
 ================
 
-\#\#pivot longer
+## `pivot_longer`
+
+Use the PULSE data
 
 ``` r
 pulse_df = 
+  #read from sas data
   haven::read_sas("./data/public_pulse_data.sas7bdat") %>% 
   janitor::clean_names()
-
-pulse_df
 ```
 
-    ## # A tibble: 1,087 × 7
-    ##       id   age sex    bdi_score_bl bdi_score_01m bdi_score_06m bdi_score_12m
-    ##    <dbl> <dbl> <chr>         <dbl>         <dbl>         <dbl>         <dbl>
-    ##  1 10003  48.0 male              7             1             2             0
-    ##  2 10015  72.5 male              6            NA            NA            NA
-    ##  3 10022  58.5 male             14             3             8            NA
-    ##  4 10026  72.7 male             20             6            18            16
-    ##  5 10035  60.4 male              4             0             1             2
-    ##  6 10050  84.7 male              2            10            12             8
-    ##  7 10078  31.3 male              4             0            NA            NA
-    ##  8 10088  56.9 male              5            NA             0             2
-    ##  9 10091  76.0 male              0             3             4             0
-    ## 10 10092  74.2 female           10             2            11             6
-    ## # … with 1,077 more rows
-
-Lets try to pivot
+From Wide format to long format… Instead of having 4 columns for
+bdi\_score, we want to have two columns, with one has the visit baseline
+and the other one with the bdi\_score observed
 
 ``` r
 pulse_tidy = 
   pulse_df %>% 
   pivot_longer(
+    #specify the range using `:`
     bdi_score_bl:bdi_score_12m,
+    # Column names need to be put into a new variable named "visit"
     names_to = "visit",
+    #get rid of the prefix "bdi_score_"
     names_prefix =  "bdi_score_",
+    #All values goes into new variable named "bdi_score_"
     values_to = "bdi"
   ) %>% 
+  #relocate so that id and visit goes to the first two columns
+  relocate(id,visit) %>% 
   mutate(
     visit = replace(visit, visit == "bl", "00m"),
     visit = factor(visit)
+   #visit = recode(visit,"bl" = "00m")
   )
 ```
 
